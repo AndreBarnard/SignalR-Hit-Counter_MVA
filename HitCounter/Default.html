@@ -1,0 +1,30 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+	<meta charset="utf-8" />
+</head>
+<body>
+
+    <div id="hitCountValue">0</div>
+
+    <script src="Scripts/jquery-1.6.4.js"></script>
+    <script src="Scripts/jquery.signalR-2.2.1.js"></script>
+    <script type="text/javascript">
+
+        $(function () {
+            var connection = $.hubConnection();
+            var hub = connection.createHubProxy("hitCounter");
+
+            hub.on("onRecodHit", function (hitCount) {
+                $('#hitCountValue').text(hitCount);
+            });
+
+            connection.start(function () {
+                hub.invoke('recordHit');
+            });
+        })
+
+    </script>
+</body>
+</html>
